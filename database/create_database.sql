@@ -1,0 +1,24 @@
+CREATE DATABASE IF NOT EXISTS test;
+
+USE test;
+
+CREATE TABLE IF NOT EXISTS tasks (
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(255) NOT NULL,
+    file_path varchar(255) NOT NULL ,
+    file_original_name varchar(255) NOT NULL ,
+    retry_id varchar(255) NULL,
+    result FLOAT(8, 4) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS jobs (
+    id int NOT NULL AUTO_INCREMENT,
+    command TEXT NOT NULL,
+    status tinyint(1) NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);

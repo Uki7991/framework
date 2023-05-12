@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile
+    container_name: test-app
+    image: test-app
+    working_dir: /var/www/html
+    ports:
+      - '8000:8000'
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - app-network
+
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    restart: unless-stopped
+    container_name: test-mysql
+    tty: true
+    ports:
+      - '3066:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d/
+      - mysql:/var/lib/mysql/
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+      retries: 3
+      timeout: 5s
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql:
+    driver: local
+  database:
+    driver: local
