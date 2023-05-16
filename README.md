@@ -2,12 +2,6 @@ cp .env.example .env
 
 docker-compose up -d --build
 
-docker exec -i test-mysql  sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"' < ./database/create_database.sql
-
-docker-compose down
-
-docker-compose up -d
-
 http available in 8000 port
 
 ### Routes:
