@@ -24,7 +24,7 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        $result = $this->taskService->store($request->request->get('name'), $request->files->get('file'));
+        $result = $this->taskService->store($request->request->get('name'), $request->files->get('photo'));
 
         return new JsonResponse($result);
     }
