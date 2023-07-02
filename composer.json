@@ -1,5 +1,5 @@
 {
-    "name": "uki7991/test",
+    "name": "uki7991/framework",
     "type": "project",
     "autoload": {
         "psr-4": {
